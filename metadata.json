@@ -1,0 +1,6 @@
+{
+  "name": "Otávio Lv. 22 - Edição Pokémon Fire Red & Revista Recreio",
+  "description": "Site comemorativo de 22 anos do Otávio inspirado no universo Pokémon Fire Red e na revista Recreio com mural de memórias, cartinhas secretas, minigames e você sabia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
