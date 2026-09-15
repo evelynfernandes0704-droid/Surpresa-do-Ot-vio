@@ -25,6 +25,13 @@ function uploadMuralPlugin() {
               }
               const targetPath = path.join(publicDir, 'mural_otavio.jpg');
               fs.writeFileSync(targetPath, buffer);
+
+              const srcDataDir = path.resolve(process.cwd(), 'src', 'data');
+              if (!fs.existsSync(srcDataDir)) {
+                fs.mkdirSync(srcDataDir, { recursive: true });
+              }
+              const tsPath = path.join(srcDataDir, 'muralDataUri.ts');
+              fs.writeFileSync(tsPath, `export const MURAL_BASE64 = "data:image/jpeg;base64,${base64Data}";\n`);
               
               res.writeHead(200, { 'Content-Type': 'application/json' });
               res.end(JSON.stringify({ success: true, message: 'Foto salva com sucesso!' }));
