@@ -2,25 +2,18 @@ import React, { useState } from 'react';
 import { Camera, ZoomIn, ZoomOut, Maximize2, Minimize2, Heart, Info } from 'lucide-react';
 import { playSelect, playLevelUp } from '../utils/soundEffects';
 import confetti from 'canvas-confetti';
-
-const STORAGE_KEY = 'otavio_birthday_mural_single_image';
-const DEFAULT_URL = '/mural_otavio.jpg';
+import { MURAL_BASE64 } from '../data/muralDataUri';
 
 export const MemoryWall: React.FC = () => {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [imageSrc, setImageSrc] = useState<string>(MURAL_BASE64 || '/mural_otavio.jpg');
 
-  const [imageSrc] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved && (saved.startsWith('data:image') || saved.startsWith('http') || saved.startsWith('/'))) {
-        return saved;
-      }
-    } catch {
-      // ignore
+  const handleImageError = () => {
+    if (imageSrc !== '/mural_otavio.jpg') {
+      setImageSrc('/mural_otavio.jpg');
     }
-    return DEFAULT_URL;
-  });
+  };
 
   const handleZoomIn = () => {
     playSelect();
@@ -213,6 +206,7 @@ export const MemoryWall: React.FC = () => {
           <div className="w-full h-full overflow-auto flex items-center justify-center p-2 sm:p-4 no-scrollbar">
             <img
               src={imageSrc}
+              onError={handleImageError}
               alt="Pôster Mural Completo - 22 Anos do Otávio"
               referrerPolicy="no-referrer"
               style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'center center' }}
